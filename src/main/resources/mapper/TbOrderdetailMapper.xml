@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medicine.mapper.TbOrderdetailMapper" >
+  <resultMap id="BaseResultMap" type="com.medicine.pojo.TbOrderdetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="shopid" property="shopid" jdbcType="INTEGER" />
+    <result column="detailcount" property="detailcount" jdbcType="INTEGER" />
+    <result column="detailprice" property="detailprice" jdbcType="VARCHAR" />
+    <result column="orderid" property="orderid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.medicine.vo.OrderDetailVo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="shopid" property="shopid" jdbcType="INTEGER" />
+    <result column="detailcount" property="detailcount" jdbcType="INTEGER" />
+    <result column="detailprice" property="detailprice" jdbcType="VARCHAR" />
+    <result column="orderid" property="orderid" jdbcType="INTEGER" />
+    <result column="shopname" property="shopname" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, shopid, detailcount, detailprice, orderid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.medicine.pojo.TbOrderdetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_orderdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_orderdetail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_orderdetail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.medicine.pojo.TbOrderdetailExample" >
+    delete from tb_orderdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.medicine.pojo.TbOrderdetail" >
+    insert into tb_orderdetail (id, shopid, detailcount, 
+      detailprice, orderid)
+    values (#{id,jdbcType=INTEGER}, #{shopid,jdbcType=INTEGER}, #{detailcount,jdbcType=INTEGER}, 
+      #{detailprice,jdbcType=VARCHAR}, #{orderid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.medicine.pojo.TbOrderdetail" >
+    insert into tb_orderdetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shopid != null" >
+        shopid,
+      </if>
+      <if test="detailcount != null" >
+        detailcount,
+      </if>
+      <if test="detailprice != null" >
+        detailprice,
+      </if>
+      <if test="orderid != null" >
+        orderid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shopid != null" >
+        #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="detailcount != null" >
+        #{detailcount,jdbcType=INTEGER},
+      </if>
+      <if test="detailprice != null" >
+        #{detailprice,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        #{orderid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.medicine.pojo.TbOrderdetailExample" resultType="java.lang.Integer" >
+    select count(*) from tb_orderdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_orderdetail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopid != null" >
+        shopid = #{record.shopid,jdbcType=INTEGER},
+      </if>
+      <if test="record.detailcount != null" >
+        detailcount = #{record.detailcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.detailprice != null" >
+        detailprice = #{record.detailprice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderid != null" >
+        orderid = #{record.orderid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_orderdetail
+    set id = #{record.id,jdbcType=INTEGER},
+      shopid = #{record.shopid,jdbcType=INTEGER},
+      detailcount = #{record.detailcount,jdbcType=INTEGER},
+      detailprice = #{record.detailprice,jdbcType=VARCHAR},
+      orderid = #{record.orderid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.medicine.pojo.TbOrderdetail" >
+    update tb_orderdetail
+    <set >
+      <if test="shopid != null" >
+        shopid = #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="detailcount != null" >
+        detailcount = #{detailcount,jdbcType=INTEGER},
+      </if>
+      <if test="detailprice != null" >
+        detailprice = #{detailprice,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        orderid = #{orderid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.medicine.pojo.TbOrderdetail" >
+    update tb_orderdetail
+    set shopid = #{shopid,jdbcType=INTEGER},
+      detailcount = #{detailcount,jdbcType=INTEGER},
+      detailprice = #{detailprice,jdbcType=VARCHAR},
+      orderid = #{orderid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <select id="findByOrderId" parameterType="java.lang.Integer" resultMap="BaseResultMap2" >
+    select a.*,c.shopname,c.logo  from tb_orderdetail a,tb_order b,tb_shop c
+    where a.orderid=b.id and a.shopid=c.id
+    and a.orderid=#{id,jdbcType=INTEGER}
+  </select>
+   <select id="getSumPrice" parameterType="java.lang.Integer" resultType="java.lang.String" >
+    select sum(b.price*a.shopcount) from tb_cart a,tb_shop b where a.shopid=b.id 
+    and a.uid=#{id,jdbcType=INTEGER}
+  </select>
+</mapper>

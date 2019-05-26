@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medicine.mapper.TbShopMapper" >
+  <resultMap id="BaseResultMap" type="com.medicine.pojo.TbShop" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="shopname" property="shopname" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="store" property="store" jdbcType="INTEGER" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="typeid" property="typeid" jdbcType="INTEGER" />
+    <result column="sellerid" property="sellerid" jdbcType="INTEGER" />
+    <result column="shopstatus" property="shopstatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.medicine.pojo.TbShop" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, shopname, price, store, logo, unit, typeid, sellerid, shopstatus
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.medicine.pojo.TbShopExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.medicine.pojo.TbShopExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_shop
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_shop
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.medicine.pojo.TbShopExample" >
+    delete from tb_shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.medicine.pojo.TbShop" >
+    insert into tb_shop (id, shopname, price, 
+      store, logo, unit, 
+      typeid, sellerid, shopstatus, 
+      description)
+    values (#{id,jdbcType=INTEGER}, #{shopname,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
+      #{store,jdbcType=INTEGER}, #{logo,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{typeid,jdbcType=INTEGER}, #{sellerid,jdbcType=INTEGER}, #{shopstatus,jdbcType=VARCHAR}, 
+      #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.medicine.pojo.TbShop" >
+    insert into tb_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shopname != null" >
+        shopname,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="store != null" >
+        store,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="typeid != null" >
+        typeid,
+      </if>
+      <if test="sellerid != null" >
+        sellerid,
+      </if>
+      <if test="shopstatus != null" >
+        shopstatus,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shopname != null" >
+        #{shopname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="store != null" >
+        #{store,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="sellerid != null" >
+        #{sellerid,jdbcType=INTEGER},
+      </if>
+      <if test="shopstatus != null" >
+        #{shopstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.medicine.pojo.TbShopExample" resultType="java.lang.Integer" >
+    select count(*) from tb_shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_shop
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopname != null" >
+        shopname = #{record.shopname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.store != null" >
+        store = #{record.store,jdbcType=INTEGER},
+      </if>
+      <if test="record.logo != null" >
+        logo = #{record.logo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeid != null" >
+        typeid = #{record.typeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sellerid != null" >
+        sellerid = #{record.sellerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopstatus != null" >
+        shopstatus = #{record.shopstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tb_shop
+    set id = #{record.id,jdbcType=INTEGER},
+      shopname = #{record.shopname,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      store = #{record.store,jdbcType=INTEGER},
+      logo = #{record.logo,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      typeid = #{record.typeid,jdbcType=INTEGER},
+      sellerid = #{record.sellerid,jdbcType=INTEGER},
+      shopstatus = #{record.shopstatus,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_shop
+    set id = #{record.id,jdbcType=INTEGER},
+      shopname = #{record.shopname,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      store = #{record.store,jdbcType=INTEGER},
+      logo = #{record.logo,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      typeid = #{record.typeid,jdbcType=INTEGER},
+      sellerid = #{record.sellerid,jdbcType=INTEGER},
+      shopstatus = #{record.shopstatus,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.medicine.pojo.TbShop" >
+    update tb_shop
+    <set >
+      <if test="shopname != null" >
+        shopname = #{shopname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="store != null" >
+        store = #{store,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        typeid = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="sellerid != null" >
+        sellerid = #{sellerid,jdbcType=INTEGER},
+      </if>
+      <if test="shopstatus != null" >
+        shopstatus = #{shopstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.medicine.pojo.TbShop" >
+    update tb_shop
+    set shopname = #{shopname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      store = #{store,jdbcType=INTEGER},
+      logo = #{logo,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      typeid = #{typeid,jdbcType=INTEGER},
+      sellerid = #{sellerid,jdbcType=INTEGER},
+      shopstatus = #{shopstatus,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.medicine.pojo.TbShop" >
+    update tb_shop
+    set shopname = #{shopname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      store = #{store,jdbcType=INTEGER},
+      logo = #{logo,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      typeid = #{typeid,jdbcType=INTEGER},
+      sellerid = #{sellerid,jdbcType=INTEGER},
+      shopstatus = #{shopstatus,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
